@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>meme api free</title>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      header h1,footer h3{
+        text-align: center;
+        text-transform: capitalize;
+        padding: 20px 0px;
+        color: darkslategray;
+        font-family: sans-serif;
+      }
+      section{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        flex-wrap: wrap;
+      }
+      .box{
+        margin: 20px;
+      }
+      .box img{
+        width: 250px;
+      }
+      .box a{
+        display: block;
+        text-decoration: none;
+        text-transform: capitalize;
+        padding: 10px;
+        text-align: center;
+        background: black;
+        color: white;
+        letter-spacing: 1px;
+        border-radius: 3px;
+      }
+    </style>
+</head>
+<body>
+    <header>
+      <h1>meme api</h1>
+    </header>
+    <section id="box"></section>
+    <footer>
+      <h3>design & developed by manish prajapati</h3>
+    </footer>
+    <script>
+      let box = document.getElementById("box");
+      let data = async () => (await fetch("https://api.imgflip.com/get_memes")).json();
+      data().then((res) => {
+        if(res.success == true){
+          let info = res.data.memes;
+          info.forEach((elem) => {
+            box.insertAdjacentHTML("beforeend",`<div class="box"><img src="${elem.url}" alt="${elem.name}"><a href="${elem.url}" download>download</a></div>`);
+          });
+        }else{
+          alert("api not working.");
+        }
+      }).catch((err) => {
+        alert("api error found.");
+      });
+    </script>
+</body>
+</html>
